@@ -17,18 +17,20 @@
     :root {
       --bg: #070809;
       --bg-soft: #0c0d0f;
-      --card: rgba(16, 17, 18, 0.92);
+      --card: rgba(15, 16, 17, 0.96);
 
       --gold: #c99835;
       --gold-bright: #e0b654;
-      --gold-soft: rgba(201, 152, 53, 0.18);
+      --gold-soft: rgba(201, 152, 53, 0.16);
 
       --ivory: #f0eadb;
       --text: #d6d0c3;
-      --muted: #88847b;
+      --muted: #8d887e;
 
-      --border: rgba(201, 152, 53, 0.25);
+      --border: rgba(201, 152, 53, 0.28);
+
       --green: #63c98a;
+      --red: #e56d6d;
     }
 
     * {
@@ -41,13 +43,18 @@
 
     body {
       margin: 0;
+
       background:
         radial-gradient(
-          circle at 50% -20%,
+          circle at 50% -10%,
           rgba(201, 152, 53, 0.12),
-          transparent 35%
+          transparent 34%
         ),
-        var(--bg);
+        linear-gradient(
+          to bottom,
+          #090909,
+          #070809
+        );
 
       color: var(--text);
 
@@ -58,7 +65,7 @@
         "Segoe UI",
         sans-serif;
 
-      line-height: 1.65;
+      line-height: 1.6;
     }
 
     a {
@@ -66,40 +73,109 @@
     }
 
     .container {
-      width: min(1050px, 91%);
+      width: min(1180px, 92%);
       margin: 0 auto;
+    }
+
+    /* NAV */
+
+    nav {
+      width: 100%;
+
+      border-bottom: 1px solid rgba(201, 152, 53, 0.17);
+
+      background: rgba(7, 8, 9, 0.88);
+
+      backdrop-filter: blur(12px);
+
+      position: sticky;
+      top: 0;
+
+      z-index: 50;
+    }
+
+    .nav-inner {
+      width: min(1180px, 92%);
+      margin: 0 auto;
+
+      min-height: 64px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 30px;
+    }
+
+    .nav-brand {
+      color: var(--ivory);
+
+      font-family: Georgia, "Times New Roman", serif;
+
+      font-size: 1.2rem;
+
+      letter-spacing: 0.08em;
+
+      text-decoration: none;
+    }
+
+    .nav-brand span {
+      color: var(--gold);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+    }
+
+    .nav-links a {
+      color: #aaa59b;
+
+      text-decoration: none;
+
+      font-size: 0.78rem;
+
+      letter-spacing: 0.12em;
+
+      text-transform: uppercase;
+
+      transition: 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--gold-bright);
     }
 
     /* HERO */
 
     .hero {
-      min-height: 92vh;
-
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
 
       text-align: center;
 
-      padding: 55px 0 70px;
+      padding: 34px 0 38px;
     }
 
     .logo-wrap {
       position: relative;
-      width: min(470px, 82vw);
-      margin-bottom: 35px;
+
+      width: min(320px, 72vw);
+
+      margin-bottom: 16px;
     }
 
     .logo-wrap::before {
       content: "";
 
       position: absolute;
-      inset: 8%;
+      inset: 10%;
 
-      background: rgba(201, 152, 53, 0.13);
+      background: rgba(201, 152, 53, 0.14);
 
-      filter: blur(55px);
+      filter: blur(42px);
 
       border-radius: 50%;
 
@@ -108,13 +184,16 @@
 
     .logo {
       display: block;
+
       width: 100%;
       height: auto;
 
       border-radius: 50%;
 
       filter:
-        drop-shadow(0 0 25px rgba(201, 152, 53, 0.10));
+        drop-shadow(
+          0 0 22px rgba(201, 152, 53, 0.08)
+        );
     }
 
     .tagline {
@@ -124,21 +203,21 @@
 
       font-family: Georgia, "Times New Roman", serif;
 
-      font-size: clamp(1.3rem, 3vw, 1.8rem);
+      font-size: clamp(1.35rem, 2.8vw, 1.8rem);
 
       font-weight: 400;
 
-      letter-spacing: 0.04em;
+      letter-spacing: 0.03em;
     }
 
     .subtag {
-      margin-top: 12px;
+      margin-top: 9px;
 
       color: var(--muted);
 
-      font-size: 0.95rem;
+      font-size: 0.78rem;
 
-      letter-spacing: 0.20em;
+      letter-spacing: 0.24em;
 
       text-transform: uppercase;
     }
@@ -147,23 +226,23 @@
       display: inline-flex;
       align-items: center;
 
-      gap: 9px;
+      gap: 8px;
 
-      margin-top: 27px;
+      margin-top: 18px;
 
-      padding: 9px 17px;
+      padding: 7px 14px;
 
       border: 1px solid var(--border);
 
       border-radius: 100px;
 
-      background: rgba(10, 11, 12, 0.75);
+      background: rgba(10, 11, 12, 0.8);
 
       color: #aaa69c;
 
       font-family: monospace;
 
-      font-size: 0.82rem;
+      font-size: 0.76rem;
     }
 
     .status-dot {
@@ -172,49 +251,46 @@
 
       border-radius: 50%;
 
-      background: var(--green);
+      background: var(--gold);
 
-      box-shadow: 0 0 10px rgba(99, 201, 138, 0.7);
+      box-shadow:
+        0 0 9px rgba(201, 152, 53, 0.5);
     }
 
-    /* STATS */
+    /* TOP STATS */
 
     .stats {
       display: grid;
 
       grid-template-columns:
-        repeat(3, minmax(0, 1fr));
+        repeat(4, minmax(0, 1fr));
 
       gap: 14px;
 
-      margin-bottom: 100px;
+      margin-bottom: 34px;
     }
 
     .stat {
-      min-height: 125px;
+      min-height: 132px;
 
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-
-      padding: 24px;
+      padding: 21px;
 
       background:
         linear-gradient(
           145deg,
-          rgba(22, 21, 18, 0.95),
-          rgba(11, 12, 13, 0.95)
+          rgba(19, 18, 16, 0.97),
+          rgba(10, 11, 12, 0.97)
         );
 
       border: 1px solid var(--border);
 
-      border-radius: 8px;
+      border-radius: 10px;
     }
 
     .stat-label {
       color: var(--muted);
 
-      font-size: 0.72rem;
+      font-size: 0.7rem;
 
       letter-spacing: 0.16em;
 
@@ -222,136 +298,260 @@
     }
 
     .stat-value {
-      margin-top: 8px;
+      margin-top: 7px;
 
       color: var(--ivory);
 
       font-family: Georgia, "Times New Roman", serif;
 
-      font-size: 1.45rem;
+      font-size: 1.55rem;
+    }
+
+    .stat-sub {
+      margin-top: 7px;
+
+      color: #77736c;
+
+      font-size: 0.76rem;
     }
 
     .gold {
       color: var(--gold-bright);
     }
 
-    /* CONTENT */
-
-    .content {
-      max-width: 790px;
-
-      margin: 0 auto;
+    .positive {
+      color: var(--green);
     }
 
-    section {
-      margin: 0 0 100px;
+    .negative {
+      color: var(--red);
     }
 
-    .section-label {
-      margin-bottom: 12px;
+    /* ORDER BOOK */
 
-      color: var(--gold);
+    .order-book {
+      margin-bottom: 50px;
 
-      font-size: 0.72rem;
+      border: 1px solid var(--border);
 
-      letter-spacing: 0.20em;
+      border-radius: 10px;
 
-      text-transform: uppercase;
+      overflow: hidden;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(18, 18, 16, 0.97),
+          rgba(9, 10, 11, 0.98)
+        );
     }
 
-    h2 {
-      margin: 0 0 25px;
+    .order-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 20px;
+
+      padding: 18px 22px;
+
+      border-bottom:
+        1px solid rgba(201, 152, 53, 0.18);
+    }
+
+    .order-header-left h2 {
+      margin: 0;
 
       color: var(--ivory);
 
       font-family: Georgia, "Times New Roman", serif;
 
-      font-size: clamp(2rem, 5vw, 3.1rem);
+      font-size: 1.35rem;
 
       font-weight: 400;
-
-      line-height: 1.15;
     }
 
-    p {
-      margin: 0 0 20px;
+    .order-header-left div {
+      margin-top: 3px;
 
-      color: #aaa69d;
+      color: var(--muted);
 
-      font-size: 1.03rem;
+      font-size: 0.73rem;
     }
 
-    .principles {
+    .order-update {
+      color: #77736c;
+
+      font-family: monospace;
+
+      font-size: 0.72rem;
+    }
+
+    .order-table-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+
+      border-collapse: collapse;
+
+      min-width: 720px;
+    }
+
+    thead {
+      background: rgba(255, 255, 255, 0.015);
+    }
+
+    th {
+      padding: 13px 18px;
+
+      color: #77736c;
+
+      text-align: left;
+
+      font-size: 0.66rem;
+
+      letter-spacing: 0.14em;
+
+      text-transform: uppercase;
+
+      font-weight: 500;
+    }
+
+    td {
+      padding: 15px 18px;
+
+      border-top:
+        1px solid rgba(255, 255, 255, 0.035);
+
+      color: #aaa69c;
+
+      font-size: 0.84rem;
+    }
+
+    .side-buy {
+      color: var(--green);
+
+      font-weight: 700;
+    }
+
+    .side-sell {
+      color: var(--red);
+
+      font-weight: 700;
+    }
+
+    .order-empty {
+      padding: 35px 20px;
+
+      text-align: center;
+
+      color: #77736c;
+    }
+
+    .order-empty strong {
+      display: block;
+
+      margin-bottom: 5px;
+
+      color: #a49f95;
+
+      font-family: Georgia, "Times New Roman", serif;
+
+      font-size: 1rem;
+
+      font-weight: 400;
+    }
+
+    /* CONTENT GRID */
+
+    .content-grid {
       display: grid;
 
       grid-template-columns:
-        repeat(3, 1fr);
+        repeat(3, minmax(0, 1fr));
 
-      gap: 1px;
+      gap: 14px;
 
-      margin-top: 40px;
+      margin-bottom: 60px;
+    }
 
-      background: var(--border);
+    .panel {
+      min-height: 280px;
+
+      padding: 27px;
 
       border: 1px solid var(--border);
+
+      border-radius: 10px;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(17, 17, 15, 0.95),
+          rgba(9, 10, 11, 0.98)
+        );
+    }
+
+    .panel-label {
+      color: var(--gold);
+
+      font-size: 0.68rem;
+
+      letter-spacing: 0.18em;
+
+      text-transform: uppercase;
+    }
+
+    .panel h2 {
+      margin: 10px 0 18px;
+
+      color: var(--ivory);
+
+      font-family: Georgia, "Times New Roman", serif;
+
+      font-size: 1.5rem;
+
+      font-weight: 400;
+    }
+
+    .panel p {
+      margin: 0 0 14px;
+
+      color: #9c988f;
+
+      font-size: 0.9rem;
     }
 
     .principle {
-      padding: 28px 20px;
-
-      background: var(--bg-soft);
-
-      text-align: center;
+      margin-bottom: 17px;
     }
 
     .principle strong {
       display: block;
 
-      margin-bottom: 5px;
-
       color: var(--ivory);
 
       font-family: Georgia, "Times New Roman", serif;
 
-      font-size: 1.1rem;
+      font-size: 1rem;
 
       font-weight: 400;
     }
 
     .principle span {
-      color: var(--muted);
+      color: #858078;
 
-      font-size: 0.78rem;
-    }
-
-    /* CTA */
-
-    .access {
-      padding: 50px;
-
-      border: 1px solid var(--border);
-
-      background:
-        radial-gradient(
-          circle at top right,
-          rgba(201, 152, 53, 0.10),
-          transparent 50%
-        ),
-        var(--card);
-
-      text-align: center;
-    }
-
-    .access h2 {
-      font-size: 2rem;
+      font-size: 0.8rem;
     }
 
     .button {
       display: inline-block;
 
-      margin-top: 17px;
+      margin-top: 13px;
 
-      padding: 12px 25px;
+      padding: 11px 20px;
 
       border: 1px solid var(--gold);
 
@@ -359,11 +559,11 @@
 
       text-decoration: none;
 
-      font-size: 0.83rem;
+      font-size: 0.76rem;
 
       font-weight: 600;
 
-      letter-spacing: 0.09em;
+      letter-spacing: 0.1em;
 
       text-transform: uppercase;
 
@@ -379,57 +579,78 @@
     /* FOOTER */
 
     footer {
-      margin-top: 120px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
 
-      padding: 38px 0 50px;
+      gap: 25px;
 
-      border-top: 1px solid rgba(201, 152, 53, 0.15);
+      margin-top: 25px;
 
-      color: #64615b;
+      padding: 30px 0 42px;
 
-      text-align: center;
+      border-top:
+        1px solid rgba(201, 152, 53, 0.16);
 
-      font-size: 0.78rem;
+      color: #69655f;
 
-      letter-spacing: 0.06em;
+      font-size: 0.75rem;
     }
 
-    footer .motto {
-      margin-top: 7px;
+    .footer-center {
+      text-align: center;
+    }
 
-      color: #817b70;
+    .footer-title {
+      color: #918b80;
+
+      letter-spacing: 0.09em;
+    }
+
+    .footer-motto {
+      margin-top: 4px;
 
       font-family: Georgia, "Times New Roman", serif;
     }
 
-    /* MOBILE */
+    /* RESPONSIVE */
 
-    @media (max-width: 700px) {
+    @media (max-width: 980px) {
+      .stats {
+        grid-template-columns:
+          repeat(2, minmax(0, 1fr));
+      }
+
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .nav-links {
+        display: none;
+      }
+
+      .nav-inner {
+        justify-content: center;
+      }
 
       .hero {
-        min-height: auto;
-
-        padding-top: 50px;
-
-        padding-bottom: 75px;
+        padding-top: 25px;
       }
 
       .logo-wrap {
-        width: min(390px, 94vw);
+        width: min(285px, 82vw);
       }
 
       .stats {
         grid-template-columns: 1fr;
-
-        margin-bottom: 80px;
       }
 
-      .principles {
-        grid-template-columns: 1fr;
-      }
+      footer {
+        flex-direction: column;
 
-      .access {
-        padding: 35px 22px;
+        text-align: center;
       }
     }
   </style>
@@ -438,7 +659,32 @@
 
 <body>
 
-  <main class="container">
+  <nav>
+    <div class="nav-inner">
+
+      <a
+        class="nav-brand"
+        href="#home"
+      >
+        ELEUTERIA <span>₿</span>
+      </a>
+
+      <div class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#orders">Orders</a>
+        <a href="#about">About</a>
+        <a href="#principles">Principles</a>
+        <a href="#robosats">RoboSats</a>
+      </div>
+
+    </div>
+  </nav>
+
+
+  <main
+    class="container"
+    id="home"
+  >
 
     <!-- HERO -->
 
@@ -462,13 +708,13 @@
 
       <div class="status">
         <span class="status-dot"></span>
-        ELEUTERIA ONLINE
+        COORDINATOR
       </div>
 
     </header>
 
 
-    <!-- LIVE DATA -->
+    <!-- LIVE STATS -->
 
     <div class="stats">
 
@@ -480,9 +726,39 @@
 
         <div
           class="stat-value gold"
-          id="btc-price"
+          id="btc-eur"
         >
           Loading…
+        </div>
+
+        <div
+          class="stat-sub"
+          id="btc-eur-change"
+        >
+          24h change
+        </div>
+
+      </div>
+
+
+      <div class="stat">
+
+        <div class="stat-label">
+          Bitcoin / USD
+        </div>
+
+        <div
+          class="stat-value gold"
+          id="btc-usd"
+        >
+          Loading…
+        </div>
+
+        <div
+          class="stat-sub"
+          id="btc-usd-change"
+        >
+          24h change
         </div>
 
       </div>
@@ -496,9 +772,16 @@
 
         <div
           class="stat-value"
-          id="orders"
+          id="order-count"
         >
-          Coming soon
+          —
+        </div>
+
+        <div
+          class="stat-sub"
+          id="order-status"
+        >
+          Live feed not connected yet
         </div>
 
       </div>
@@ -514,24 +797,82 @@
           Bitcoin Mainnet
         </div>
 
+        <div class="stat-sub">
+          Lightning · Tor
+        </div>
+
       </div>
 
     </div>
 
 
-    <div class="content">
+    <!-- LIVE ORDER BOOK -->
 
-      <!-- ABOUT -->
+    <section
+      class="order-book"
+      id="orders"
+    >
 
-      <section>
+      <div class="order-header">
 
-        <div class="section-label">
-          The Coordinator
+        <div class="order-header-left">
+
+          <h2>
+            Eleuteria Live Order Book
+          </h2>
+
+          <div>
+            Public RoboSats orders handled by this coordinator
+          </div>
+
+        </div>
+
+        <div
+          class="order-update"
+          id="order-update"
+        >
+          feed pending
+        </div>
+
+      </div>
+
+
+      <div
+        class="order-table-wrap"
+        id="order-book-content"
+      >
+
+        <div class="order-empty">
+
+          <strong>
+            Waiting for coordinator feed
+          </strong>
+
+          The live order source will be connected only after
+          the public Eleuteria endpoint has been verified.
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- INFORMATION -->
+
+    <div class="content-grid">
+
+      <section
+        class="panel"
+        id="about"
+      >
+
+        <div class="panel-label">
+          About
         </div>
 
         <h2>
-          Trade Bitcoin.<br>
-          Keep your freedom.
+          About Eleuteria
         </h2>
 
         <p>
@@ -540,24 +881,23 @@
         </p>
 
         <p>
-          RoboSats enables people to exchange Bitcoin over
-          Lightning without traditional accounts, custodial
-          balances or identity verification.
+          The coordinator provides neutral infrastructure for
+          Bitcoin exchanges settled over Lightning.
         </p>
 
         <p>
-          Eleuteria exists to provide another independent point
-          of coordination within that network.
+          No custodial user balances. No traditional accounts.
         </p>
 
       </section>
 
 
-      <!-- PRINCIPLES -->
+      <section
+        class="panel"
+        id="principles"
+      >
 
-      <section>
-
-        <div class="section-label">
+        <div class="panel-label">
           Principles
         </div>
 
@@ -565,69 +905,46 @@
           Freedom needs infrastructure.
         </h2>
 
-        <div class="principles">
+        <div class="principle">
+          <strong>Privacy</strong>
+          <span>Tor-first trading infrastructure.</span>
+        </div>
 
-          <div class="principle">
-            <strong>Privacy</strong>
-            <span>Tor-first infrastructure</span>
-          </div>
+        <div class="principle">
+          <strong>Sovereignty</strong>
+          <span>Your keys. Your Bitcoin.</span>
+        </div>
 
-          <div class="principle">
-            <strong>Sovereignty</strong>
-            <span>Your keys. Your Bitcoin.</span>
-          </div>
-
-          <div class="principle">
-            <strong>Cooperation</strong>
-            <span>Peer-to-peer by design</span>
-          </div>
-
+        <div class="principle">
+          <strong>Cooperation</strong>
+          <span>Peer-to-peer by design.</span>
         </div>
 
       </section>
 
 
-      <!-- PRIVACY -->
+      <section
+        class="panel"
+        id="robosats"
+      >
 
-      <section>
-
-        <div class="section-label">
-          Privacy
-        </div>
-
-        <h2>
-          No reason to watch you.
-        </h2>
-
-        <p>
-          Eleuteria's trading infrastructure is accessed over Tor.
-          This clearnet page is informational only.
-        </p>
-
-        <p>
-          This website does not require user accounts and does not
-          intentionally use analytics, advertising trackers or
-          behavioural profiling.
-        </p>
-
-      </section>
-
-
-      <!-- ACCESS -->
-
-      <section class="access">
-
-        <div class="section-label">
+        <div class="panel-label">
           RoboSats
         </div>
 
         <h2>
-          Ready to trade?
+          Access RoboSats
         </h2>
 
         <p>
-          Use the official RoboSats client and choose Eleuteria
+          Use the official RoboSats client and select Eleuteria
           as your coordinator.
+        </p>
+
+        <p>
+          This clearnet website is informational only.
+          Trading infrastructure is accessed through RoboSats
+          and Tor.
         </p>
 
         <a
@@ -646,10 +963,25 @@
 
     <footer>
 
-      ELEUTERIA · ROBOSATS COORDINATOR
+      <div>
+        Bitcoin is freedom.<br>
+        Don't trust. Verify.
+      </div>
 
-      <div class="motto">
-        Libertà · Sovranità · Cooperazione
+      <div class="footer-center">
+
+        <div class="footer-title">
+          ELEUTERIA · ROBOSATS COORDINATOR
+        </div>
+
+        <div class="footer-motto">
+          Libertà · Sovranità · Cooperazione
+        </div>
+
+      </div>
+
+      <div>
+        Bitcoin · Lightning · Tor
       </div>
 
     </footer>
@@ -659,15 +991,25 @@
 
   <script>
 
-    async function loadBitcoinPrice() {
+    async function loadBitcoinPrices() {
 
-      const priceElement =
-        document.getElementById("btc-price");
+      const eurElement =
+        document.getElementById("btc-eur");
+
+      const usdElement =
+        document.getElementById("btc-usd");
+
+      const eurChangeElement =
+        document.getElementById("btc-eur-change");
+
+      const usdChangeElement =
+        document.getElementById("btc-usd-change");
+
 
       try {
 
         const response = await fetch(
-          "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=eur"
+          "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=eur,usd&include_24hr_change=true"
         );
 
         if (!response.ok) {
@@ -676,7 +1018,7 @@
 
         const data = await response.json();
 
-        const price =
+        const eur =
           new Intl.NumberFormat(
             "en-US",
             {
@@ -686,23 +1028,85 @@
             }
           ).format(data.bitcoin.eur);
 
-        priceElement.textContent = price;
+        const usd =
+          new Intl.NumberFormat(
+            "en-US",
+            {
+              style: "currency",
+              currency: "USD",
+              maximumFractionDigits: 0
+            }
+          ).format(data.bitcoin.usd);
+
+
+        eurElement.textContent = eur;
+        usdElement.textContent = usd;
+
+
+        renderChange(
+          eurChangeElement,
+          data.bitcoin.eur_24h_change
+        );
+
+        renderChange(
+          usdChangeElement,
+          data.bitcoin.usd_24h_change
+        );
 
       }
 
       catch (error) {
 
-        priceElement.textContent = "Unavailable";
+        eurElement.textContent = "Unavailable";
+        usdElement.textContent = "Unavailable";
+
+        eurChangeElement.textContent = "";
+        usdChangeElement.textContent = "";
 
       }
 
     }
 
 
-    loadBitcoinPrice();
+    function renderChange(
+      element,
+      change
+    ) {
+
+      if (
+        typeof change !== "number"
+      ) {
+
+        element.textContent = "";
+        return;
+
+      }
+
+      const prefix =
+        change >= 0
+          ? "+"
+          : "";
+
+      element.textContent =
+        prefix +
+        change.toFixed(2) +
+        "% · 24h";
+
+      element.className =
+        "stat-sub " +
+        (
+          change >= 0
+            ? "positive"
+            : "negative"
+        );
+
+    }
+
+
+    loadBitcoinPrices();
 
     setInterval(
-      loadBitcoinPrice,
+      loadBitcoinPrices,
       60000
     );
 
