@@ -81,41 +81,29 @@
 
     nav {
       width: 100%;
-
       border-bottom: 1px solid rgba(201, 152, 53, 0.17);
-
       background: rgba(7, 8, 9, 0.88);
-
       backdrop-filter: blur(12px);
-
       position: sticky;
       top: 0;
-
       z-index: 50;
     }
 
     .nav-inner {
       width: min(1180px, 92%);
       margin: 0 auto;
-
       min-height: 64px;
-
       display: flex;
       align-items: center;
       justify-content: space-between;
-
       gap: 30px;
     }
 
     .nav-brand {
       color: var(--ivory);
-
       font-family: Georgia, "Times New Roman", serif;
-
       font-size: 1.2rem;
-
       letter-spacing: 0.08em;
-
       text-decoration: none;
     }
 
@@ -126,20 +114,15 @@
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 26px;
+      gap: 24px;
     }
 
     .nav-links a {
       color: #aaa59b;
-
       text-decoration: none;
-
-      font-size: 0.78rem;
-
-      letter-spacing: 0.12em;
-
+      font-size: 0.76rem;
+      letter-spacing: 0.11em;
       text-transform: uppercase;
-
       transition: 0.2s ease;
     }
 
@@ -153,126 +136,84 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-
       text-align: center;
-
       padding: 34px 0 38px;
     }
 
     .logo-wrap {
       position: relative;
-
       width: min(320px, 72vw);
-
       margin-bottom: 16px;
     }
 
     .logo-wrap::before {
       content: "";
-
       position: absolute;
       inset: 10%;
-
       background: rgba(201, 152, 53, 0.14);
-
       filter: blur(42px);
-
       border-radius: 50%;
-
       z-index: -1;
     }
 
     .logo {
       display: block;
-
       width: 100%;
       height: auto;
-
       border-radius: 50%;
-
-      filter:
-        drop-shadow(
-          0 0 22px rgba(201, 152, 53, 0.08)
-        );
+      filter: drop-shadow(0 0 22px rgba(201, 152, 53, 0.08));
     }
 
     .tagline {
       margin: 0;
-
       color: var(--ivory);
-
       font-family: Georgia, "Times New Roman", serif;
-
       font-size: clamp(1.35rem, 2.8vw, 1.8rem);
-
       font-weight: 400;
-
       letter-spacing: 0.03em;
     }
 
     .subtag {
       margin-top: 9px;
-
       color: var(--muted);
-
       font-size: 0.78rem;
-
       letter-spacing: 0.24em;
-
       text-transform: uppercase;
     }
 
     .status {
       display: inline-flex;
       align-items: center;
-
       gap: 8px;
-
       margin-top: 18px;
-
       padding: 7px 14px;
-
       border: 1px solid var(--border);
-
       border-radius: 100px;
-
       background: rgba(10, 11, 12, 0.8);
-
       color: #aaa69c;
-
       font-family: monospace;
-
       font-size: 0.76rem;
     }
 
     .status-dot {
       width: 7px;
       height: 7px;
-
       border-radius: 50%;
-
       background: var(--gold);
-
-      box-shadow:
-        0 0 9px rgba(201, 152, 53, 0.5);
+      box-shadow: 0 0 9px rgba(201, 152, 53, 0.5);
     }
 
-    /* TOP STATS */
+    /* STATS */
 
     .stats {
       display: grid;
-
-      grid-template-columns:
-        repeat(4, minmax(0, 1fr));
-
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 14px;
-
       margin-bottom: 34px;
     }
 
     .stat {
       min-height: 132px;
-
       padding: 21px;
 
       background:
@@ -283,35 +224,26 @@
         );
 
       border: 1px solid var(--border);
-
       border-radius: 10px;
     }
 
     .stat-label {
       color: var(--muted);
-
       font-size: 0.7rem;
-
       letter-spacing: 0.16em;
-
       text-transform: uppercase;
     }
 
     .stat-value {
       margin-top: 7px;
-
       color: var(--ivory);
-
       font-family: Georgia, "Times New Roman", serif;
-
       font-size: 1.55rem;
     }
 
     .stat-sub {
       margin-top: 7px;
-
       color: #77736c;
-
       font-size: 0.76rem;
     }
 
@@ -331,11 +263,8 @@
 
     .order-book {
       margin-bottom: 50px;
-
       border: 1px solid var(--border);
-
       border-radius: 10px;
-
       overflow: hidden;
 
       background:
@@ -350,32 +279,22 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-
       gap: 20px;
-
       padding: 18px 22px;
-
-      border-bottom:
-        1px solid rgba(201, 152, 53, 0.18);
+      border-bottom: 1px solid rgba(201, 152, 53, 0.18);
     }
 
     .order-header-left h2 {
       margin: 0;
-
       color: var(--ivory);
-
       font-family: Georgia, "Times New Roman", serif;
-
       font-size: 1.35rem;
-
       font-weight: 400;
     }
 
     .order-header-left div {
       margin-top: 3px;
-
       color: var(--muted);
-
       font-size: 0.73rem;
     }
 
@@ -383,11 +302,8 @@
       display: flex;
       align-items: center;
       gap: 7px;
-
       color: #77736c;
-
       font-family: monospace;
-
       font-size: 0.72rem;
     }
 
@@ -413,9 +329,7 @@
 
     table {
       width: 100%;
-
       border-collapse: collapse;
-
       min-width: 760px;
     }
 
@@ -425,28 +339,18 @@
 
     th {
       padding: 13px 18px;
-
       color: #77736c;
-
       text-align: left;
-
       font-size: 0.66rem;
-
       letter-spacing: 0.14em;
-
       text-transform: uppercase;
-
       font-weight: 500;
     }
 
     td {
       padding: 15px 18px;
-
-      border-top:
-        1px solid rgba(255, 255, 255, 0.035);
-
+      border-top: 1px solid rgba(255, 255, 255, 0.035);
       color: #aaa69c;
-
       font-size: 0.84rem;
     }
 
@@ -460,13 +364,11 @@
 
     .side-buy {
       color: var(--green);
-
       font-weight: 700;
     }
 
     .side-sell {
       color: var(--red);
-
       font-weight: 700;
     }
 
@@ -480,46 +382,32 @@
 
     .order-empty {
       padding: 38px 20px;
-
       text-align: center;
-
       color: #77736c;
     }
 
     .order-empty strong {
       display: block;
-
       margin-bottom: 5px;
-
       color: #a49f95;
-
       font-family: Georgia, "Times New Roman", serif;
-
       font-size: 1rem;
-
       font-weight: 400;
     }
 
-    /* CONTENT GRID */
+    /* CONTENT */
 
     .content-grid {
       display: grid;
-
-      grid-template-columns:
-        repeat(3, minmax(0, 1fr));
-
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 14px;
-
-      margin-bottom: 60px;
+      margin-bottom: 50px;
     }
 
     .panel {
       min-height: 280px;
-
       padding: 27px;
-
       border: 1px solid var(--border);
-
       border-radius: 10px;
 
       background:
@@ -532,31 +420,22 @@
 
     .panel-label {
       color: var(--gold);
-
       font-size: 0.68rem;
-
       letter-spacing: 0.18em;
-
       text-transform: uppercase;
     }
 
     .panel h2 {
       margin: 10px 0 18px;
-
       color: var(--ivory);
-
       font-family: Georgia, "Times New Roman", serif;
-
       font-size: 1.5rem;
-
       font-weight: 400;
     }
 
     .panel p {
       margin: 0 0 14px;
-
       color: #9c988f;
-
       font-size: 0.9rem;
     }
 
@@ -566,50 +445,149 @@
 
     .principle strong {
       display: block;
-
       color: var(--ivory);
-
       font-family: Georgia, "Times New Roman", serif;
-
       font-size: 1rem;
-
       font-weight: 400;
     }
 
     .principle span {
       color: #858078;
-
       font-size: 0.8rem;
     }
 
     .button {
       display: inline-block;
-
       margin-top: 13px;
-
       padding: 11px 20px;
-
       border: 1px solid var(--gold);
-
       color: var(--gold-bright);
-
       text-decoration: none;
-
       font-size: 0.76rem;
-
       font-weight: 600;
-
       letter-spacing: 0.1em;
-
       text-transform: uppercase;
-
       transition: 0.2s ease;
     }
 
     .button:hover {
       background: var(--gold);
-
       color: #080808;
+    }
+
+    /* CONTACT */
+
+    .contact-section {
+      margin-bottom: 60px;
+      scroll-margin-top: 85px;
+    }
+
+    .contact-heading {
+      margin-bottom: 22px;
+    }
+
+    .contact-heading h2 {
+      margin: 8px 0 6px;
+      color: var(--ivory);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.8rem;
+      font-weight: 400;
+    }
+
+    .contact-heading p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .contact-card {
+      min-height: 165px;
+      padding: 23px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(18, 18, 16, 0.97),
+          rgba(9, 10, 11, 0.98)
+        );
+
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .contact-name {
+      color: var(--ivory);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.2rem;
+    }
+
+    .contact-description {
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 0.78rem;
+    }
+
+    .contact-value {
+      margin-top: 18px;
+      color: #aaa69c;
+      font-family: monospace;
+      font-size: 0.75rem;
+      overflow-wrap: anywhere;
+    }
+
+    .contact-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 17px;
+    }
+
+    .contact-link,
+    .copy-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      min-height: 34px;
+      padding: 7px 13px;
+
+      border: 1px solid rgba(201, 152, 53, 0.55);
+      background: transparent;
+
+      color: var(--gold-bright);
+
+      text-decoration: none;
+
+      font-family: inherit;
+      font-size: 0.68rem;
+      font-weight: 600;
+
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+
+      cursor: pointer;
+
+      transition: 0.2s ease;
+    }
+
+    .contact-link:hover,
+    .copy-button:hover {
+      background: var(--gold);
+      color: #080808;
+    }
+
+    .copy-button.copied {
+      border-color: var(--green);
+      color: var(--green);
     }
 
     /* FOOTER */
@@ -618,18 +596,14 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-
       gap: 25px;
 
       margin-top: 25px;
-
       padding: 30px 0 42px;
 
-      border-top:
-        1px solid rgba(201, 152, 53, 0.16);
+      border-top: 1px solid rgba(201, 152, 53, 0.16);
 
       color: #69655f;
-
       font-size: 0.75rem;
     }
 
@@ -639,22 +613,28 @@
 
     .footer-title {
       color: #918b80;
-
       letter-spacing: 0.09em;
     }
 
     .footer-motto {
       margin-top: 4px;
-
       font-family: Georgia, "Times New Roman", serif;
+    }
+
+    /* ANCHORS */
+
+    #orders,
+    #about,
+    #principles,
+    #robosats {
+      scroll-margin-top: 85px;
     }
 
     /* RESPONSIVE */
 
     @media (max-width: 980px) {
       .stats {
-        grid-template-columns:
-          repeat(2, minmax(0, 1fr));
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
       .content-grid {
@@ -662,7 +642,26 @@
       }
     }
 
-    @media (max-width: 720px) {
+    @media (max-width: 760px) {
+      .nav-links {
+        gap: 12px;
+      }
+
+      .nav-links a {
+        font-size: 0.65rem;
+      }
+
+      .nav-links a:nth-child(3),
+      .nav-links a:nth-child(4) {
+        display: none;
+      }
+
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 620px) {
       .nav-links {
         display: none;
       }
@@ -690,7 +689,6 @@
 
       footer {
         flex-direction: column;
-
         text-align: center;
       }
     }
@@ -703,10 +701,7 @@
   <nav>
     <div class="nav-inner">
 
-      <a
-        class="nav-brand"
-        href="#home"
-      >
+      <a class="nav-brand" href="#home">
         ELEUTERIA <span>₿</span>
       </a>
 
@@ -715,6 +710,7 @@
         <a href="#orders">Orders</a>
         <a href="#about">About</a>
         <a href="#principles">Principles</a>
+        <a href="#contact">Contact</a>
         <a href="#robosats">RoboSats</a>
       </div>
 
@@ -722,10 +718,7 @@
   </nav>
 
 
-  <main
-    class="container"
-    id="home"
-  >
+  <main class="container" id="home">
 
     <!-- HERO -->
 
@@ -760,79 +753,46 @@
     <div class="stats">
 
       <div class="stat">
+        <div class="stat-label">Bitcoin / EUR</div>
 
-        <div class="stat-label">
-          Bitcoin / EUR
-        </div>
-
-        <div
-          class="stat-value gold"
-          id="btc-eur"
-        >
+        <div class="stat-value gold" id="btc-eur">
           Loading…
         </div>
 
-        <div
-          class="stat-sub"
-          id="btc-eur-change"
-        >
+        <div class="stat-sub" id="btc-eur-change">
           24h change
         </div>
-
       </div>
 
 
       <div class="stat">
+        <div class="stat-label">Bitcoin / USD</div>
 
-        <div class="stat-label">
-          Bitcoin / USD
-        </div>
-
-        <div
-          class="stat-value gold"
-          id="btc-usd"
-        >
+        <div class="stat-value gold" id="btc-usd">
           Loading…
         </div>
 
-        <div
-          class="stat-sub"
-          id="btc-usd-change"
-        >
+        <div class="stat-sub" id="btc-usd-change">
           24h change
         </div>
-
       </div>
 
 
       <div class="stat">
+        <div class="stat-label">Eleuteria Orders</div>
 
-        <div class="stat-label">
-          Eleuteria Orders
-        </div>
-
-        <div
-          class="stat-value"
-          id="order-count"
-        >
+        <div class="stat-value" id="order-count">
           —
         </div>
 
-        <div
-          class="stat-sub"
-          id="order-status"
-        >
+        <div class="stat-sub" id="order-status">
           Connecting to Nostr…
         </div>
-
       </div>
 
 
       <div class="stat">
-
-        <div class="stat-label">
-          Network
-        </div>
+        <div class="stat-label">Network</div>
 
         <div class="stat-value">
           Bitcoin Mainnet
@@ -841,7 +801,6 @@
         <div class="stat-sub">
           Lightning · Tor
         </div>
-
       </div>
 
     </div>
@@ -849,10 +808,7 @@
 
     <!-- LIVE ORDER BOOK -->
 
-    <section
-      class="order-book"
-      id="orders"
-    >
+    <section class="order-book" id="orders">
 
       <div class="order-header">
 
@@ -870,10 +826,7 @@
 
         <div class="order-update">
 
-          <span
-            class="feed-dot"
-            id="feed-dot"
-          ></span>
+          <span class="feed-dot" id="feed-dot"></span>
 
           <span id="order-update">
             connecting…
@@ -884,10 +837,7 @@
       </div>
 
 
-      <div
-        class="order-table-wrap"
-        id="order-book-content"
-      >
+      <div class="order-table-wrap" id="order-book-content">
 
         <div class="order-empty">
 
@@ -908,10 +858,7 @@
 
     <div class="content-grid">
 
-      <section
-        class="panel"
-        id="about"
-      >
+      <section class="panel" id="about">
 
         <div class="panel-label">
           About
@@ -938,10 +885,7 @@
       </section>
 
 
-      <section
-        class="panel"
-        id="principles"
-      >
+      <section class="panel" id="principles">
 
         <div class="panel-label">
           Principles
@@ -969,10 +913,7 @@
       </section>
 
 
-      <section
-        class="panel"
-        id="robosats"
-      >
+      <section class="panel" id="robosats">
 
         <div class="panel-label">
           RoboSats
@@ -1007,6 +948,186 @@
     </div>
 
 
+    <!-- CONTACT & VERIFY -->
+
+    <section class="contact-section" id="contact">
+
+      <div class="contact-heading">
+
+        <div class="panel-label">
+          Contact & Verify
+        </div>
+
+        <h2>
+          Reach Eleuteria
+        </h2>
+
+        <p>
+          Public contact and identity verification channels.
+        </p>
+
+      </div>
+
+
+      <div class="contact-grid">
+
+        <!-- SIMPLEX -->
+
+        <article class="contact-card">
+
+          <div>
+
+            <div class="contact-name">
+              SimpleX
+            </div>
+
+            <div class="contact-description">
+              Recommended for support and dispute communication.
+            </div>
+
+            <div class="contact-value">
+              Private messaging via SimpleX
+            </div>
+
+          </div>
+
+          <div class="contact-actions">
+
+            <a
+              class="contact-link"
+              href="https://smp17.simplex.im/a#w2lbfI-Rbea5dukWc38CVDQEzLryz8q7p2C4NGEViNg"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Open SimpleX
+            </a>
+
+          </div>
+
+        </article>
+
+
+        <!-- NOSTR -->
+
+        <article class="contact-card">
+
+          <div>
+
+            <div class="contact-name">
+              Nostr
+            </div>
+
+            <div class="contact-description">
+              Eleuteria public Nostr identity.
+            </div>
+
+            <div class="contact-value">
+              npub1pujrhf5m03ll5uunf0rlt7n9s6uqzwhacvgdsz93askzex83cgvsukm9hf
+            </div>
+
+          </div>
+
+          <div class="contact-actions">
+
+            <button
+              class="copy-button"
+              type="button"
+              data-copy="npub1pujrhf5m03ll5uunf0rlt7n9s6uqzwhacvgdsz93askzex83cgvsukm9hf"
+            >
+              Copy npub
+            </button>
+
+          </div>
+
+        </article>
+
+
+        <!-- TELEGRAM -->
+
+        <article class="contact-card">
+
+          <div>
+
+            <div class="contact-name">
+              Telegram
+            </div>
+
+            <div class="contact-description">
+              Eleuteria coordinator contact.
+            </div>
+
+            <div class="contact-value">
+              @eleuteriacoordinator
+            </div>
+
+          </div>
+
+          <div class="contact-actions">
+
+            <a
+              class="contact-link"
+              href="https://t.me/eleuteriacoordinator"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Open Telegram
+            </a>
+
+          </div>
+
+        </article>
+
+
+        <!-- PGP -->
+
+        <article class="contact-card">
+
+          <div>
+
+            <div class="contact-name">
+              PGP
+            </div>
+
+            <div class="contact-description">
+              Verify Eleuteria's public signing identity.
+            </div>
+
+            <div class="contact-value">
+              5461 43E7 5847 8375 9F68 29AF 6DA5 626C 8AF8 DF61
+            </div>
+
+          </div>
+
+          <div class="contact-actions">
+
+            <a
+              class="contact-link"
+              href="https://keys.openpgp.org/vks/v1/by-fingerprint/546143E7584783759F6829AF6DA5626C8AF8DF61"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Public Key
+            </a>
+
+            <button
+              class="copy-button"
+              type="button"
+              data-copy="546143E7584783759F6829AF6DA5626C8AF8DF61"
+            >
+              Copy Fingerprint
+            </button>
+
+          </div>
+
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- FOOTER -->
+
     <footer>
 
       <div>
@@ -1038,9 +1159,9 @@
   <script>
 
     /*
-     * ---------------------------------------------------------
+     * =========================================================
      * BITCOIN PRICE
-     * ---------------------------------------------------------
+     * =========================================================
      */
 
     async function loadBitcoinPrices() {
@@ -1114,10 +1235,7 @@
     }
 
 
-    function renderChange(
-      element,
-      change
-    ) {
+    function renderChange(element, change) {
 
       if (typeof change !== "number") {
         element.textContent = "";
@@ -1146,40 +1264,22 @@
 
 
     /*
-     * ---------------------------------------------------------
+     * =========================================================
      * ROBOSATS / NOSTR LIVE BOOK
-     * ---------------------------------------------------------
-     *
-     * RoboSats v0.8.7-alpha:
-     *
-     * kind    : 38383
-     * network : mainnet
-     * status  : pending
-     * lookback: 108000 seconds
-     *
-     * This page DOES NOT connect to Eleuteria.
-     * It listens to public RoboSats federation relays.
-     * ---------------------------------------------------------
+     * =========================================================
      */
-
 
     const ELEUTERIA_NOSTR_PUBKEY =
       "0f243ba69b7c7ffa73934bc7f5fa6586b8013afdc310d808b1ec2c2c98f1c219";
-
 
     const ROBOSATS_ORDER_KIND = 38383;
 
     const BOOK_LOOKBACK_SECONDS = 108000;
 
-
     const ROBOSATS_RELAYS = [
-
       "wss://unsafe.templeofsats.org/relay/",
-
       "wss://unsafe.thebiglake.org/relay/"
-
     ];
-
 
     const latestEvents = new Map();
 
@@ -1189,10 +1289,6 @@
 
     let lastFeedUpdate = null;
 
-
-    /*
-     * Read a Nostr tag.
-     */
 
     function getTag(event, name) {
 
@@ -1210,12 +1306,6 @@
 
     }
 
-
-    /*
-     * Store only the newest event for a given "d" tag.
-     *
-     * Kind 38383 is parameterized replaceable.
-     */
 
     function processOrderEvent(event) {
 
@@ -1251,36 +1341,23 @@
       const previous =
         latestEvents.get(key);
 
-
-      /*
-       * Never allow an older relay copy to replace
-       * a newer state of the same order.
-       */
-
       if (
         previous &&
         Number(previous.created_at) >
-          Number(event.created_at)
+        Number(event.created_at)
       ) {
         return;
       }
-
-
-      /*
-       * When timestamps are equal, keep deterministic
-       * ordering using the event id.
-       */
 
       if (
         previous &&
         Number(previous.created_at) ===
-          Number(event.created_at) &&
+        Number(event.created_at) &&
         String(previous.id) >
-          String(event.id)
+        String(event.id)
       ) {
         return;
       }
-
 
       latestEvents.set(
         key,
@@ -1294,10 +1371,6 @@
 
     }
 
-
-    /*
-     * Return currently active Eleuteria orders.
-     */
 
     function getActiveOrders() {
 
@@ -1318,7 +1391,6 @@
             return false;
           }
 
-
           const expiration =
             getTag(event, "expiration");
 
@@ -1329,7 +1401,6 @@
           ) {
             return false;
           }
-
 
           return true;
 
@@ -1342,10 +1413,6 @@
 
     }
 
-
-    /*
-     * Parse one RoboSats Nostr order.
-     */
 
     function parseOrder(event) {
 
@@ -1384,7 +1451,6 @@
 
       let amount = "—";
 
-
       if (
         amountTag &&
         amountTag[1]
@@ -1414,7 +1480,6 @@
 
 
       let premium = "—";
-
 
       if (
         premiumTag &&
@@ -1449,7 +1514,6 @@
 
       let payment = "—";
 
-
       if (
         paymentTag &&
         paymentTag.length > 1
@@ -1464,7 +1528,6 @@
 
 
       let expiration = "—";
-
 
       if (
         expirationTag &&
@@ -1493,13 +1556,7 @@
     }
 
 
-    /*
-     * Human-readable expiration.
-     */
-
-    function formatExpiration(
-      unixTime
-    ) {
+    function formatExpiration(unixTime) {
 
       const seconds =
         unixTime -
@@ -1507,11 +1564,9 @@
           Date.now() / 1000
         );
 
-
       if (seconds <= 0) {
         return "Expired";
       }
-
 
       if (seconds < 3600) {
 
@@ -1524,7 +1579,6 @@
 
       }
 
-
       if (seconds < 86400) {
 
         return (
@@ -1536,7 +1590,6 @@
 
       }
 
-
       return (
         Math.ceil(
           seconds / 86400
@@ -1546,10 +1599,6 @@
 
     }
 
-
-    /*
-     * Escape text before writing into HTML.
-     */
 
     function escapeHtml(value) {
 
@@ -1562,10 +1611,6 @@
 
     }
 
-
-    /*
-     * Draw the live book.
-     */
 
     function renderOrderBook() {
 
@@ -1581,7 +1626,6 @@
         document.getElementById(
           "order-count"
         );
-
 
       count.textContent =
         String(orders.length);
@@ -1604,7 +1648,6 @@
 
         }
 
-
         container.innerHTML = `
           <div class="order-empty">
             <strong>
@@ -1626,19 +1669,16 @@
             const order =
               parseOrder(event);
 
-
             const sideClass =
               order.side === "SELL"
                 ? "side-sell"
                 : "side-buy";
-
 
             const premiumNumber =
               Number(
                 order.premium
                   .replace("%", "")
               );
-
 
             const premiumClass =
               !Number.isNaN(
@@ -1709,10 +1749,6 @@
     }
 
 
-    /*
-     * Update connection indicators.
-     */
-
     function updateFeedStatus() {
 
       const states =
@@ -1720,13 +1756,11 @@
           relayStates.values()
         );
 
-
       const connected =
         states.filter(
           state =>
             state === "open"
         ).length;
-
 
       const status =
         document.getElementById(
@@ -1749,12 +1783,10 @@
         dot.className =
           "feed-dot connected";
 
-
         if (receivedEOSE) {
 
           status.textContent =
             "Public Nostr feed";
-
 
           if (lastFeedUpdate) {
 
@@ -1798,7 +1830,6 @@
       dot.className =
         "feed-dot error";
 
-
       status.textContent =
         "Nostr feed unavailable";
 
@@ -1807,10 +1838,6 @@
 
     }
 
-
-    /*
-     * Open one federation relay.
-     */
 
     function connectRelay(
       relayUrl,
@@ -1824,9 +1851,7 @@
 
       updateFeedStatus();
 
-
       let socket;
-
 
       try {
 
@@ -1875,7 +1900,6 @@
 
           updateFeedStatus();
 
-
           const since =
             Math.floor(
               Date.now() / 1000
@@ -1890,7 +1914,6 @@
             subscriptionId,
 
             {
-
               authors: [
                 ELEUTERIA_NOSTR_PUBKEY
               ],
@@ -1900,7 +1923,6 @@
               ],
 
               since: since
-
             }
 
           ];
@@ -1919,7 +1941,6 @@
         function (messageEvent) {
 
           let message;
-
 
           try {
 
@@ -2012,10 +2033,6 @@
     }
 
 
-    /*
-     * Reconnect without involving any backend.
-     */
-
     function scheduleReconnect(
       relayUrl,
       relayIndex
@@ -2035,10 +2052,6 @@
 
     }
 
-
-    /*
-     * Connect to independent public federation relays.
-     */
 
     function startNostrBook() {
 
@@ -2060,22 +2073,147 @@
 
 
     /*
-     * Periodically remove orders whose expiration
-     * has passed without waiting for another event.
+     * =========================================================
+     * COPY BUTTONS
+     * =========================================================
      */
 
-    setInterval(
-      function () {
+    async function copyValue(button) {
 
-        renderOrderBook();
+      const value =
+        button.dataset.copy;
 
-      },
-      30000
-    );
+      if (!value) {
+        return;
+      }
+
+      try {
+
+        await navigator.clipboard.writeText(
+          value
+        );
+
+        const originalText =
+          button.textContent;
+
+        button.textContent =
+          "Copied";
+
+        button.classList.add(
+          "copied"
+        );
+
+        setTimeout(
+          function () {
+
+            button.textContent =
+              originalText;
+
+            button.classList.remove(
+              "copied"
+            );
+
+          },
+          1600
+        );
+
+      }
+
+      catch (error) {
+
+        /*
+         * Fallback for browsers where Clipboard API
+         * is unavailable.
+         */
+
+        const textarea =
+          document.createElement(
+            "textarea"
+          );
+
+        textarea.value =
+          value;
+
+        textarea.style.position =
+          "fixed";
+
+        textarea.style.opacity =
+          "0";
+
+        document.body.appendChild(
+          textarea
+        );
+
+        textarea.select();
+
+        try {
+          document.execCommand("copy");
+
+          const originalText =
+            button.textContent;
+
+          button.textContent =
+            "Copied";
+
+          button.classList.add(
+            "copied"
+          );
+
+          setTimeout(
+            function () {
+
+              button.textContent =
+                originalText;
+
+              button.classList.remove(
+                "copied"
+              );
+
+            },
+            1600
+          );
+
+        }
+
+        finally {
+
+          document.body.removeChild(
+            textarea
+          );
+
+        }
+
+      }
+
+    }
+
+
+    document
+      .querySelectorAll(
+        ".copy-button"
+      )
+      .forEach(
+        function (button) {
+
+          button.addEventListener(
+            "click",
+            function () {
+
+              copyValue(
+                button
+              );
+
+            }
+          );
+
+        }
+      );
 
 
     /*
-     * Startup
+     * =========================================================
+     * STARTUP
+     * =========================================================
      */
 
     loadBitcoinPrices();
@@ -2086,6 +2224,16 @@
     setInterval(
       loadBitcoinPrices,
       60000
+    );
+
+
+    setInterval(
+      function () {
+
+        renderOrderBook();
+
+      },
+      30000
     );
 
   </script>
