@@ -380,11 +380,31 @@
     }
 
     .order-update {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+
       color: #77736c;
 
       font-family: monospace;
 
       font-size: 0.72rem;
+    }
+
+    .feed-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+    }
+
+    .feed-dot.connected {
+      background: var(--green);
+      box-shadow: 0 0 8px rgba(99, 201, 138, 0.6);
+    }
+
+    .feed-dot.error {
+      background: var(--red);
     }
 
     .order-table-wrap {
@@ -396,7 +416,7 @@
 
       border-collapse: collapse;
 
-      min-width: 720px;
+      min-width: 760px;
     }
 
     thead {
@@ -430,6 +450,14 @@
       font-size: 0.84rem;
     }
 
+    tbody tr {
+      transition: background 0.15s ease;
+    }
+
+    tbody tr:hover {
+      background: rgba(201, 152, 53, 0.035);
+    }
+
     .side-buy {
       color: var(--green);
 
@@ -442,8 +470,16 @@
       font-weight: 700;
     }
 
+    .premium-positive {
+      color: var(--gold-bright);
+    }
+
+    .premium-negative {
+      color: var(--green);
+    }
+
     .order-empty {
-      padding: 35px 20px;
+      padding: 38px 20px;
 
       text-align: center;
 
@@ -647,6 +683,11 @@
         grid-template-columns: 1fr;
       }
 
+      .order-header {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
       footer {
         flex-direction: column;
 
@@ -781,7 +822,7 @@
           class="stat-sub"
           id="order-status"
         >
-          Live feed not connected yet
+          Connecting to Nostr…
         </div>
 
       </div>
@@ -822,16 +863,22 @@
           </h2>
 
           <div>
-            Public RoboSats orders handled by this coordinator
+            Public RoboSats orders received through the Nostr federation
           </div>
 
         </div>
 
-        <div
-          class="order-update"
-          id="order-update"
-        >
-          feed pending
+        <div class="order-update">
+
+          <span
+            class="feed-dot"
+            id="feed-dot"
+          ></span>
+
+          <span id="order-update">
+            connecting…
+          </span>
+
         </div>
 
       </div>
@@ -845,11 +892,10 @@
         <div class="order-empty">
 
           <strong>
-            Waiting for coordinator feed
+            Connecting to RoboSats Nostr relays
           </strong>
 
-          The live order source will be connected only after
-          the public Eleuteria endpoint has been verified.
+          Waiting for the public Eleuteria order feed.
 
         </div>
 
@@ -991,6 +1037,12 @@
 
   <script>
 
+    /*
+     * ---------------------------------------------------------
+     * BITCOIN PRICE
+     * ---------------------------------------------------------
+     */
+
     async function loadBitcoinPrices() {
 
       const eurElement =
@@ -1005,7 +1057,6 @@
       const usdChangeElement =
         document.getElementById("btc-usd-change");
 
-
       try {
 
         const response = await fetch(
@@ -1018,7 +1069,7 @@
 
         const data = await response.json();
 
-        const eur =
+        eurElement.textContent =
           new Intl.NumberFormat(
             "en-US",
             {
@@ -1028,7 +1079,7 @@
             }
           ).format(data.bitcoin.eur);
 
-        const usd =
+        usdElement.textContent =
           new Intl.NumberFormat(
             "en-US",
             {
@@ -1037,11 +1088,6 @@
               maximumFractionDigits: 0
             }
           ).format(data.bitcoin.usd);
-
-
-        eurElement.textContent = eur;
-        usdElement.textContent = usd;
-
 
         renderChange(
           eurChangeElement,
@@ -1073,13 +1119,9 @@
       change
     ) {
 
-      if (
-        typeof change !== "number"
-      ) {
-
+      if (typeof change !== "number") {
         element.textContent = "";
         return;
-
       }
 
       const prefix =
@@ -1103,7 +1145,943 @@
     }
 
 
+    /*
+     * ---------------------------------------------------------
+     * ROBOSATS / NOSTR LIVE BOOK
+     * ---------------------------------------------------------
+     *
+     * RoboSats v0.8.7-alpha:
+     *
+     * kind    : 38383
+     * network : mainnet
+     * status  : pending
+     * lookback: 108000 seconds
+     *
+     * This page DOES NOT connect to Eleuteria.
+     * It listens to public RoboSats federation relays.
+     * ---------------------------------------------------------
+     */
+
+
+    const ELEUTERIA_NOSTR_PUBKEY =
+      "0f243ba69b7c7ffa73934bc7f5fa6586b8013afdc310d808b1ec2c2c98f1c219";
+
+
+    const ROBOSATS_ORDER_KIND = 38383;
+
+    const BOOK_LOOKBACK_SECONDS = 108000;
+
+
+    const ROBOSATS_RELAYS = [
+
+      "wss://unsafe.templeofsats.org/relay/",
+
+      "wss://unsafe.thebiglake.org/relay/"
+
+    ];
+
+
+    const latestEvents = new Map();
+
+    const relayStates = new Map();
+
+    let receivedEOSE = false;
+
+    let lastFeedUpdate = null;
+
+
+    /*
+     * Read a Nostr tag.
+     */
+
+    function getTag(event, name) {
+
+      if (!Array.isArray(event.tags)) {
+        return null;
+      }
+
+      return (
+        event.tags.find(
+          tag =>
+            Array.isArray(tag) &&
+            tag[0] === name
+        ) || null
+      );
+
+    }
+
+
+    /*
+     * Store only the newest event for a given "d" tag.
+     *
+     * Kind 38383 is parameterized replaceable.
+     */
+
+    function processOrderEvent(event) {
+
+      if (!event) {
+        return;
+      }
+
+      if (event.kind !== ROBOSATS_ORDER_KIND) {
+        return;
+      }
+
+      if (event.pubkey !== ELEUTERIA_NOSTR_PUBKEY) {
+        return;
+      }
+
+      const network =
+        getTag(event, "network");
+
+      if (!network || network[1] !== "mainnet") {
+        return;
+      }
+
+      const dTag =
+        getTag(event, "d");
+
+      if (!dTag || !dTag[1]) {
+        return;
+      }
+
+      const key =
+        event.pubkey + ":" + dTag[1];
+
+      const previous =
+        latestEvents.get(key);
+
+
+      /*
+       * Never allow an older relay copy to replace
+       * a newer state of the same order.
+       */
+
+      if (
+        previous &&
+        Number(previous.created_at) >
+          Number(event.created_at)
+      ) {
+        return;
+      }
+
+
+      /*
+       * When timestamps are equal, keep deterministic
+       * ordering using the event id.
+       */
+
+      if (
+        previous &&
+        Number(previous.created_at) ===
+          Number(event.created_at) &&
+        String(previous.id) >
+          String(event.id)
+      ) {
+        return;
+      }
+
+
+      latestEvents.set(
+        key,
+        event
+      );
+
+      lastFeedUpdate =
+        new Date();
+
+      renderOrderBook();
+
+    }
+
+
+    /*
+     * Return currently active Eleuteria orders.
+     */
+
+    function getActiveOrders() {
+
+      const now =
+        Math.floor(Date.now() / 1000);
+
+      return Array
+        .from(latestEvents.values())
+        .filter(event => {
+
+          const status =
+            getTag(event, "s");
+
+          if (
+            !status ||
+            status[1] !== "pending"
+          ) {
+            return false;
+          }
+
+
+          const expiration =
+            getTag(event, "expiration");
+
+          if (
+            expiration &&
+            expiration[1] &&
+            Number(expiration[1]) <= now
+          ) {
+            return false;
+          }
+
+
+          return true;
+
+        })
+        .sort(
+          (a, b) =>
+            Number(b.created_at) -
+            Number(a.created_at)
+        );
+
+    }
+
+
+    /*
+     * Parse one RoboSats Nostr order.
+     */
+
+    function parseOrder(event) {
+
+      const sideTag =
+        getTag(event, "k");
+
+      const currencyTag =
+        getTag(event, "f");
+
+      const amountTag =
+        getTag(event, "fa");
+
+      const premiumTag =
+        getTag(event, "premium");
+
+      const paymentTag =
+        getTag(event, "pm");
+
+      const expirationTag =
+        getTag(event, "expiration");
+
+
+      const side =
+        sideTag &&
+        sideTag[1] === "sell"
+          ? "SELL"
+          : "BUY";
+
+
+      const currency =
+        currencyTag &&
+        currencyTag[1]
+          ? currencyTag[1]
+          : "—";
+
+
+      let amount = "—";
+
+
+      if (
+        amountTag &&
+        amountTag[1]
+      ) {
+
+        if (amountTag[2]) {
+
+          amount =
+            amountTag[1] +
+            " – " +
+            amountTag[2] +
+            " " +
+            currency;
+
+        }
+
+        else {
+
+          amount =
+            amountTag[1] +
+            " " +
+            currency;
+
+        }
+
+      }
+
+
+      let premium = "—";
+
+
+      if (
+        premiumTag &&
+        premiumTag[1] !== undefined
+      ) {
+
+        const value =
+          Number(premiumTag[1]);
+
+        if (!Number.isNaN(value)) {
+
+          premium =
+            (
+              value > 0
+                ? "+"
+                : ""
+            ) +
+            value.toFixed(2) +
+            "%";
+
+        }
+
+        else {
+
+          premium =
+            premiumTag[1] + "%";
+
+        }
+
+      }
+
+
+      let payment = "—";
+
+
+      if (
+        paymentTag &&
+        paymentTag.length > 1
+      ) {
+
+        payment =
+          paymentTag
+            .slice(1)
+            .join(" ");
+
+      }
+
+
+      let expiration = "—";
+
+
+      if (
+        expirationTag &&
+        expirationTag[1]
+      ) {
+
+        expiration =
+          formatExpiration(
+            Number(
+              expirationTag[1]
+            )
+          );
+
+      }
+
+
+      return {
+        side,
+        currency,
+        amount,
+        premium,
+        payment,
+        expiration
+      };
+
+    }
+
+
+    /*
+     * Human-readable expiration.
+     */
+
+    function formatExpiration(
+      unixTime
+    ) {
+
+      const seconds =
+        unixTime -
+        Math.floor(
+          Date.now() / 1000
+        );
+
+
+      if (seconds <= 0) {
+        return "Expired";
+      }
+
+
+      if (seconds < 3600) {
+
+        return (
+          Math.ceil(
+            seconds / 60
+          ) +
+          " min"
+        );
+
+      }
+
+
+      if (seconds < 86400) {
+
+        return (
+          Math.ceil(
+            seconds / 3600
+          ) +
+          " h"
+        );
+
+      }
+
+
+      return (
+        Math.ceil(
+          seconds / 86400
+        ) +
+        " d"
+      );
+
+    }
+
+
+    /*
+     * Escape text before writing into HTML.
+     */
+
+    function escapeHtml(value) {
+
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+
+    }
+
+
+    /*
+     * Draw the live book.
+     */
+
+    function renderOrderBook() {
+
+      const orders =
+        getActiveOrders();
+
+      const container =
+        document.getElementById(
+          "order-book-content"
+        );
+
+      const count =
+        document.getElementById(
+          "order-count"
+        );
+
+
+      count.textContent =
+        String(orders.length);
+
+
+      if (orders.length === 0) {
+
+        if (!receivedEOSE) {
+
+          container.innerHTML = `
+            <div class="order-empty">
+              <strong>
+                Loading Eleuteria orders
+              </strong>
+              Synchronizing the public RoboSats Nostr feed.
+            </div>
+          `;
+
+          return;
+
+        }
+
+
+        container.innerHTML = `
+          <div class="order-empty">
+            <strong>
+              No active orders
+            </strong>
+            Eleuteria currently has no public pending orders.
+          </div>
+        `;
+
+        return;
+
+      }
+
+
+      const rows =
+        orders
+          .map(event => {
+
+            const order =
+              parseOrder(event);
+
+
+            const sideClass =
+              order.side === "SELL"
+                ? "side-sell"
+                : "side-buy";
+
+
+            const premiumNumber =
+              Number(
+                order.premium
+                  .replace("%", "")
+              );
+
+
+            const premiumClass =
+              !Number.isNaN(
+                premiumNumber
+              ) &&
+              premiumNumber < 0
+
+                ? "premium-negative"
+
+                : "premium-positive";
+
+
+            return `
+              <tr>
+
+                <td class="${sideClass}">
+                  ${escapeHtml(order.side)}
+                </td>
+
+                <td>
+                  ${escapeHtml(order.currency)}
+                </td>
+
+                <td>
+                  ${escapeHtml(order.amount)}
+                </td>
+
+                <td class="${premiumClass}">
+                  ${escapeHtml(order.premium)}
+                </td>
+
+                <td>
+                  ${escapeHtml(order.payment)}
+                </td>
+
+                <td>
+                  ${escapeHtml(order.expiration)}
+                </td>
+
+              </tr>
+            `;
+
+          })
+          .join("");
+
+
+      container.innerHTML = `
+        <table>
+
+          <thead>
+            <tr>
+              <th>Side</th>
+              <th>Fiat</th>
+              <th>Amount</th>
+              <th>Premium</th>
+              <th>Payment method</th>
+              <th>Expires</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            ${rows}
+          </tbody>
+
+        </table>
+      `;
+
+    }
+
+
+    /*
+     * Update connection indicators.
+     */
+
+    function updateFeedStatus() {
+
+      const states =
+        Array.from(
+          relayStates.values()
+        );
+
+
+      const connected =
+        states.filter(
+          state =>
+            state === "open"
+        ).length;
+
+
+      const status =
+        document.getElementById(
+          "order-status"
+        );
+
+      const update =
+        document.getElementById(
+          "order-update"
+        );
+
+      const dot =
+        document.getElementById(
+          "feed-dot"
+        );
+
+
+      if (connected > 0) {
+
+        dot.className =
+          "feed-dot connected";
+
+
+        if (receivedEOSE) {
+
+          status.textContent =
+            "Public Nostr feed";
+
+
+          if (lastFeedUpdate) {
+
+            update.textContent =
+              "live · " +
+              lastFeedUpdate
+                .toLocaleTimeString(
+                  [],
+                  {
+                    hour: "2-digit",
+                    minute: "2-digit"
+                  }
+                );
+
+          }
+
+          else {
+
+            update.textContent =
+              "live · synchronized";
+
+          }
+
+        }
+
+        else {
+
+          status.textContent =
+            "Synchronizing Nostr";
+
+          update.textContent =
+            "connected · syncing";
+
+        }
+
+        return;
+
+      }
+
+
+      dot.className =
+        "feed-dot error";
+
+
+      status.textContent =
+        "Nostr feed unavailable";
+
+      update.textContent =
+        "reconnecting…";
+
+    }
+
+
+    /*
+     * Open one federation relay.
+     */
+
+    function connectRelay(
+      relayUrl,
+      relayIndex
+    ) {
+
+      relayStates.set(
+        relayUrl,
+        "connecting"
+      );
+
+      updateFeedStatus();
+
+
+      let socket;
+
+
+      try {
+
+        socket =
+          new WebSocket(
+            relayUrl
+          );
+
+      }
+
+      catch (error) {
+
+        relayStates.set(
+          relayUrl,
+          "closed"
+        );
+
+        updateFeedStatus();
+
+        scheduleReconnect(
+          relayUrl,
+          relayIndex
+        );
+
+        return;
+
+      }
+
+
+      const subscriptionId =
+        "eleuteria-book-" +
+        relayIndex +
+        "-" +
+        Math.random()
+          .toString(36)
+          .slice(2, 9);
+
+
+      socket.onopen =
+        function () {
+
+          relayStates.set(
+            relayUrl,
+            "open"
+          );
+
+          updateFeedStatus();
+
+
+          const since =
+            Math.floor(
+              Date.now() / 1000
+            ) -
+            BOOK_LOOKBACK_SECONDS;
+
+
+          const request = [
+
+            "REQ",
+
+            subscriptionId,
+
+            {
+
+              authors: [
+                ELEUTERIA_NOSTR_PUBKEY
+              ],
+
+              kinds: [
+                ROBOSATS_ORDER_KIND
+              ],
+
+              since: since
+
+            }
+
+          ];
+
+
+          socket.send(
+            JSON.stringify(
+              request
+            )
+          );
+
+        };
+
+
+      socket.onmessage =
+        function (messageEvent) {
+
+          let message;
+
+
+          try {
+
+            message =
+              JSON.parse(
+                messageEvent.data
+              );
+
+          }
+
+          catch (error) {
+
+            return;
+
+          }
+
+
+          if (
+            !Array.isArray(message)
+          ) {
+            return;
+          }
+
+
+          if (
+            message[1] !==
+            subscriptionId
+          ) {
+            return;
+          }
+
+
+          if (
+            message[0] === "EVENT" &&
+            message[2]
+          ) {
+
+            processOrderEvent(
+              message[2]
+            );
+
+          }
+
+
+          if (
+            message[0] === "EOSE"
+          ) {
+
+            receivedEOSE = true;
+
+            renderOrderBook();
+
+            updateFeedStatus();
+
+          }
+
+        };
+
+
+      socket.onerror =
+        function () {
+
+          relayStates.set(
+            relayUrl,
+            "error"
+          );
+
+          updateFeedStatus();
+
+        };
+
+
+      socket.onclose =
+        function () {
+
+          relayStates.set(
+            relayUrl,
+            "closed"
+          );
+
+          updateFeedStatus();
+
+          scheduleReconnect(
+            relayUrl,
+            relayIndex
+          );
+
+        };
+
+    }
+
+
+    /*
+     * Reconnect without involving any backend.
+     */
+
+    function scheduleReconnect(
+      relayUrl,
+      relayIndex
+    ) {
+
+      setTimeout(
+        function () {
+
+          connectRelay(
+            relayUrl,
+            relayIndex
+          );
+
+        },
+        10000
+      );
+
+    }
+
+
+    /*
+     * Connect to independent public federation relays.
+     */
+
+    function startNostrBook() {
+
+      ROBOSATS_RELAYS.forEach(
+        function (
+          relay,
+          index
+        ) {
+
+          connectRelay(
+            relay,
+            index
+          );
+
+        }
+      );
+
+    }
+
+
+    /*
+     * Periodically remove orders whose expiration
+     * has passed without waiting for another event.
+     */
+
+    setInterval(
+      function () {
+
+        renderOrderBook();
+
+      },
+      30000
+    );
+
+
+    /*
+     * Startup
+     */
+
     loadBitcoinPrices();
+
+    startNostrBook();
+
 
     setInterval(
       loadBitcoinPrices,
