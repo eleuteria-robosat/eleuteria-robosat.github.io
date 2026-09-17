@@ -1412,6 +1412,26 @@
     }
 
 
+    function formatFiatAmount(value) {
+
+      const number =
+        Number(value);
+
+      if (Number.isNaN(number)) {
+        return value;
+      }
+
+      return number.toLocaleString(
+        "en-US",
+        {
+          maximumFractionDigits: 8,
+          useGrouping: false
+        }
+      );
+
+    }
+
+
     function parseOrder(event) {
 
       const sideTag =
@@ -1457,9 +1477,9 @@
         if (amountTag[2]) {
 
           amount =
-            amountTag[1] +
+            formatFiatAmount(amountTag[1]) +
             " – " +
-            amountTag[2] +
+            formatFiatAmount(amountTag[2]) +
             " " +
             currency;
 
@@ -1468,7 +1488,7 @@
         else {
 
           amount =
-            amountTag[1] +
+            formatFiatAmount(amountTag[1]) +
             " " +
             currency;
 
